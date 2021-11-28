@@ -44,7 +44,7 @@
 											<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
 										</div>
-										<button type="submit" class="btn button" formaction="index-2.html">Sign In</button>
+										<button type="submit" class="btn button" formaction="posts.html">Sign In</button>
 										<div class="callout">
 											<span>Don't have account? <a href="sign-up.html">Create Account</a></span>
 										</div>
@@ -60,7 +60,7 @@
 					<div class="container">
 						<div class="col-md-12">
 							<div class="preference">
-								<h2>Hello, Enemy Of My Enemy!</h2>
+								<h2>Hello, Friend!</h2>
 								<p>Enter your personal details and start your journey with Swipe today.</p>
 								<a href="sign-up.html" class="btn button">Sign Up</a>
 							</div>
@@ -77,6 +77,11 @@
 		<script>window.jQuery || document.write('<script src="dist/js/vendor/jquery-slim.min.js"><\/script>')</script>
 		<script src="dist/js/vendor/popper.min.js"></script>
 		<script src="dist/js/bootstrap.min.js"></script>
+        <script>
+            const data = {{{data}}};
+            console.log(data.name);
+
+        </script>
 	</body>
 
 </html>

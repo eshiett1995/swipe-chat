@@ -26,9 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/sign-in.html', indexRouter);
 app.use('/sign-up.html', usersRouter);
-app.use('/index-2.html', router.get('/', function(req, res, next) {
-      res.render('index-2', { title: 'Swipe' });
-    }));
+// app.use('/index-2.html', router.get('/', function(req, res, next) {
+//       res.render('index-2', { title: 'Swipe' });
+//     }));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
