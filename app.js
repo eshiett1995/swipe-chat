@@ -1,12 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config();
 
-var indexRouter = require('./routes/index');
+const { initializeApp } = require('firebase-admin/app');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+
+const indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var favicon = require('serve-favicon');
+
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('connected');
+});
+
 var router = express.Router();
 var app = express();
 
