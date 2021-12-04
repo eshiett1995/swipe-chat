@@ -86,7 +86,7 @@
         <script>
            function postToServer(e) {
                console.log(e);
-                   $.post("http://localhost:5000/api/sign-up", {username: $('#inputName').val(), email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
+                   $.post("/api/sign-up", {username: $('#inputName').val(), email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
                        console.log(data);
                    }
                );

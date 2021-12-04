@@ -85,7 +85,7 @@
         <script>
             function postToServer(e) {
                 console.log(e);
-                $.post("http://localhost:5000/api/login", {email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
+                $.post("/api/login", {email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
                      if(data.success){
                          localStorage.setItem('token', data.token);
                          window.location.href = '/posts.html';
