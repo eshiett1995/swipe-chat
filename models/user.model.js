@@ -53,8 +53,7 @@ userSchema.statics = {
         }
         //TODO create wallet
         let user = await this();
-        user.firstname = payload.firstname;
-        user.lastname = payload.lastname;
+        user.username = payload.username;
         user.email = payload.email;
         user.password = bcrypt.hashSync(payload.password, 10);
         user.email = email;
@@ -68,6 +67,7 @@ userSchema.statics = {
     async login(payload) {
         let {email, password} = payload;
         let foundUser = await this.findOne({'email': email}).exec();
+        console.log(foundUser);
         const match = await bcrypt.compare(password, foundUser.password);
         if(match){
             return {
@@ -76,10 +76,7 @@ userSchema.statics = {
                 token: jwt.sign({ _id: foundUser._id }, process.env.JWT_PRIVATE_KEY),
                 data: {
                     user : foundUser,
-                    tags: await tagModel.find({}),
-                    categories: await categoryModel.find({})
                 }
-
             };
         }else{
             return {
@@ -92,4 +89,4 @@ userSchema.statics = {
 }
 
 userSchema.plugin(userPaginate);
-module.exports = mongoose.model('User', userSchema);
+ module.exports = mongoose.model('User', userSchema);
