@@ -6,8 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('sign-in', { title: 'Swipe', data: JSON.stringify({name : 'Chicken'}) });
 });
 
-router.get('/posts.html', function(req, res, next) {
-  res.render('posts', { title: '' });
+router.get('/posts.html', async function(req, res, next) {
+
+  const ArticleModel = require('./../models/article.model')
+  let response = await ArticleModel.getArticles();
+  res.render('posts', { title: '', data: JSON.stringify(response) });
 });
 
 router.get('/post.html', function(req, res, next) {

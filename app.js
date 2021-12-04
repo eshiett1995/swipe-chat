@@ -12,6 +12,10 @@ let usersRouter = require('./routes/users');
 let apiRouter = require('./routes/api');
 const favicon = require('serve-favicon');
 
+require('./models/author.model')
+require('./models/article.model')
+require('./models/user.model')
+
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
@@ -19,6 +23,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('connected');
 });
+
+
 
 const router = express.Router();
 const app = express();

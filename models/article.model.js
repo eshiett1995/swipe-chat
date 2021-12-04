@@ -1,25 +1,32 @@
 'use strict';
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = require("mongoose/lib/schema");
 const jwt = require('jsonwebtoken');
-const userPaginate = require('mongoose-aggregate-paginate-v2');
+const mongoose = require('mongoose');
 
-const authorSchema = new Schema(
+const articleSchema = new Schema(
     {
         title: {
             type: String,
             text: true,
-            maxlength: 50
+            maxlength: 200
+        },
+        detail: {
+            type: String,
+            text: true,
+            maxlength: 200
+        },
+        image :{
+            type: String,
+            text: true,
         },
         content: {
             type: String,
             text: true,
-            maxlength: 50
         },
-        organizer: {
+        author: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Organizer'
+            ref: 'Author'
         },
 
     },
@@ -28,55 +35,27 @@ const authorSchema = new Schema(
     }
 );
 
-authorSchema.statics = {
-    async signUp(payload) {
-        let {email, password} = payload;
-        if(!email || !password){
-            return {
-                success: false,
-                message: `Enter a ${!email ? 'email' : 'password'}`,
-                data: {}
-            };
-        }
-        //TODO create wallet
-        let user = await this();
-        user.firstname = payload.firstname;
-        user.lastname = payload.lastname;
-        user.email = payload.email;
-        user.password = bcrypt.hashSync(payload.password, 10);
-        user.email = email;
-        await user.save();
+articleSchema.statics = {
+    async createDefault() {
+        let article = await this();
+        article.title = "Visiting the world means learning cultures";
+        article.detail = "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.";
+        article.organizer = mongoose.Types.ObjectId('61ab4957e80ed67b74c46fa8');
+        await article.save();
         return {
             success: true,
-            message: 'User successfully saved',
+            message: 'Article successfully saved',
             data: {}
         };
     },
-    async login(payload) {
-        let {email, password} = payload;
-        let foundUser = await this.findOne({'email': email}).exec();
-        const match = await bcrypt.compare(password, foundUser.password);
-        if(match){
-            return {
-                success: true,
-                message: 'Login successful',
-                token: jwt.sign({ _id: foundUser._id }, process.env.JWT_PRIVATE_KEY),
-                data: {
-                    user : foundUser,
-                    tags: await tagModel.find({}),
-                    categories: await categoryModel.find({})
-                }
-
-            };
-        }else{
-            return {
-                success: false,
-                message: 'username/password not found',
-                data: {}
-            };
-        }
+    async getArticles() {
+        const tags = await this.find({}).populate('author').exec();
+        return {
+            success: true,
+            message: 'Article successfully retrieved',
+            data: tags
+        };
     },
 }
 
-authorSchema.plugin(userPaginate);
-module.exports = mongoose.model('Author', authorSchema);
+module.exports = mongoose.model('Article', articleSchema);
