@@ -12,6 +12,7 @@
 		<link href="dist/css/swipe.min.css" type="text/css" rel="stylesheet">
 		<!-- Favicon -->
 		<link href="dist/img/favicon.png" type="image/png" rel="icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body class="start">
 		<main>
@@ -44,7 +45,7 @@
 											<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
 										</div>
-										<button type="submit" class="btn button">Sign In</button>
+										<button type="submit" class="btn button" id="sign-in-button">Sign In</button>
 										<div class="callout">
 											<span>Don't have account? <a href="sign-up.html">Create Account</a></span>
 										</div>
@@ -83,9 +84,23 @@
 
         </script>
         <script>
+            function addLoading() {
+                const signInButton = $("#sign-in-button");
+                signInButton.empty();
+                signInButton.append('<i class="fa fa-circle-o-notch fa-spin"></i>  Loading');
+                signInButton.prop("disabled",true);
+            }
+
+            function removeLoading() {
+                const signInButton = $("#sign-in-button");
+                signInButton.empty();
+                signInButton.append('Sign In');
+                signInButton.prop("disabled",false);
+            }
             function postToServer(e) {
-                console.log(e);
+                addLoading();
                 $.post("/api/login", {email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
+                     removeLoading();
                      if(data.success){
                          localStorage.setItem('token', data.token);
                          window.location.href = '/posts.html';
