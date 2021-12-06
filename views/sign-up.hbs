@@ -50,7 +50,7 @@
 											<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
 										</div>
-										<button type="submit" class="btn button">Sign Up</button>
+										<button type="submit" class="btn button" id="sign-up-button">Sign Up</button>
 										<div class="callout">
 											<span>Already a member? <a href="sign-in.html">Sign In</a></span>
 										</div>
@@ -84,10 +84,30 @@
 		<script src="dist/js/vendor/popper.min.js"></script>
 		<script src="dist/js/bootstrap.min.js"></script>
         <script>
+            function addLoading() {
+                const signInButton = $("#sign-up-button");
+                signInButton.empty();
+                signInButton.append('<i class="fa fa-circle-o-notch fa-spin"></i>  Loading');
+                signInButton.prop("disabled",true);
+            }
+
+            function removeLoading() {
+                const signInButton = $("#sign-up-button");
+                signInButton.empty();
+                signInButton.append('Sign Up');
+                signInButton.prop("disabled",false);
+            }
            function postToServer(e) {
-               console.log(e);
+               addLoading();
                    $.post("/api/sign-up", {username: $('#inputName').val(), email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
                        console.log(data);
+                       removeLoading();
+                       if(data.success){
+                           localStorage.setItem('token', data.token);
+                           window.location.href = '/posts.html';
+                       }else{
+
+                       }
                    }
                );
            }
