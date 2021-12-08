@@ -106,6 +106,8 @@
                 $.post("/api/login", {email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
                      removeLoading();
                      if(data.success){
+                         console.log(data.token);
+                         document.cookie = "token="+data.token;
                          localStorage.setItem('token', data.token);
                          window.location.href = '/posts.html';
                      }else{

@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/posts.html', async function(req, res, next) {
 
+  console.log('-----------------------------------')
+  console.log(req.cookies)
   const ArticleModel = require('./../models/article.model')
   let response = await ArticleModel.getArticles();
   res.render('posts', { title: '', data: JSON.stringify(response) });
