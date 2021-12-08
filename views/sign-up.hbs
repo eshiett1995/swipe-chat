@@ -115,6 +115,7 @@
            function postToServer(e) {
                const text = $('#password').val();
                if(checkIfEightChar(text) && checkIfOneLowercase(text) && checkIfOneUppercase(text) && checkIfOneDigit(text) && checkIfOneSpecialChar(text)){
+               console.log('it shouldnt entere here');
                addLoading();
                $.post("/api/sign-up", {
                            username: $('#inputName').val(),
