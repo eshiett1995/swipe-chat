@@ -81,17 +81,6 @@
 		<script src="dist/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.all.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-
-
-        <script>
-            const data = {{{data}}};
-            console.log(data.name);
-            var decryptedBytes = CryptoJS.AES.decrypt('U2FsdGVkX19Go++DDtr2VQ86+IftVJsg1hJipjDGiYDKFhObWepATeZ8F6tHB2vs', "Secret Passphrase");
-            var plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
-            console.log(plaintext)
-
-        </script>
         <script>
             function addLoading() {
                 const signInButton = $("#sign-in-button");

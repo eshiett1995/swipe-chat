@@ -12,9 +12,8 @@ router.get('/posts.html', auth(), async function(req, res, next) {
   let response = await ArticleModel.getArticles();
   let CryptoJS = require("crypto-js");
   let key = 'Secret Passphrase';
-  let ciphertext = CryptoJS.AES.encrypt('this babe is babe',).toString();
-  console.log(ciphertext);
-  res.render('posts', { title: '', data: JSON.stringify(response), key: key});
+  let ciphertext = CryptoJS.AES.encrypt(JSON.stringify(response), key).toString();
+  res.render('posts', { title: '', data: ciphertext, key: key});
 });
 
 router.get('/post.html', auth(), function(req, res, next) {

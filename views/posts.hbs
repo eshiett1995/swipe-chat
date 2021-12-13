@@ -106,11 +106,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
 <script>
-    const data = {{{data}}};
-    console.log(data);
-    console.log(data.data[0]);
-    data.data.forEach(myFunction);
+    const decryptedBytes = CryptoJS.AES.decrypt('{{{data}}}', "{{key}}");
+    const plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    const decryptedObject = JSON.parse(plaintext);
+    decryptedObject.data.forEach(myFunction);
 
     function myFunction(item, index) {
         console.log('here you go', item)
