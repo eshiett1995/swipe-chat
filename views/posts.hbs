@@ -147,7 +147,7 @@
 <script>
     function logout() {
       console.log('this is it');
-        var cookies = document.cookie.split(";");
+        const cookies = document.cookie.split(";");
 
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i];
