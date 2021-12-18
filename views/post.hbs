@@ -41,6 +41,9 @@
 			<li class="nav-item">
 			<a class="nav-link" href="author.html">Author</a>
 			</li>
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link" onclick="logout()">Logout</a>
+            </li>
 		</ul>
 		<!-- End Menu -->
 		<!-- Begin Search -->
@@ -291,5 +294,37 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="assets/js/mediumish.js"></script>
+<script>
+    let myTimeout = setTimeout(logout, 5000);
+
+    let userHasInteracted = false;
+
+    let updateInteractionValue = function () {
+        console.log('user restarting timer');
+        userHasInteracted = true;
+        myRestartFunction();
+    };
+
+    $( 'body' ).click( updateInteractionValue );
+    $( window ).scroll( updateInteractionValue );
+
+    console.log( userHasInteracted );
+
+    function myRestartFunction() {
+        clearTimeout(myTimeout);
+        myTimeout = setTimeout(logout, 5000);
+    }
+    function logout() {
+        const cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            window.location.href = '/';
+        }
+    }
+</script>
 </body>
 </html>

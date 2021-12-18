@@ -145,8 +145,26 @@
 </script>
 
 <script>
+    let myTimeout = setTimeout(logout, 5000);
+
+    let userHasInteracted = false;
+
+    let updateInteractionValue = function () {
+        console.log('user restarting timer');
+        userHasInteracted = true;
+        myRestartFunction();
+    };
+
+    $( 'body' ).click( updateInteractionValue );
+    $( window ).scroll( updateInteractionValue );
+
+    console.log( userHasInteracted );
+
+    function myRestartFunction() {
+        clearTimeout(myTimeout);
+        myTimeout = setTimeout(logout, 5000);
+    }
     function logout() {
-      console.log('this is it');
         const cookies = document.cookie.split(";");
 
         for (let i = 0; i < cookies.length; i++) {
