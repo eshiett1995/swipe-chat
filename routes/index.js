@@ -20,4 +20,12 @@ router.get('/post.html', auth(), function(req, res, next) {
   res.render('post', { title: '' });
 });
 
+router.get('/admin/create-post.html', function(req, res, next) {
+  res.render('admin-create', { title: '' });
+});
+
+router.get('/admin/sign-in', function(req, res, next) {
+  res.render('sign-in-admin', { title: '' });
+});
+
 module.exports = router;

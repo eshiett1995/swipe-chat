@@ -17,4 +17,11 @@ router.post('/login', async function(req, res, next) {
     //res.render('sign-up', { title: 'Swipe' });
 });
 
+router.post('/admin/login', async function(req, res, next) {
+    console.log(req.body);
+    let response = await UserModel.adminLogin(req.body);
+    res.send(response);
+    //res.render('sign-up', { title: 'Swipe' });
+});
+
 module.exports = router;

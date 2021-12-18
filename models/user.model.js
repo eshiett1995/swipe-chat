@@ -29,6 +29,11 @@ const userSchema = new Schema(
             unique: true,
             lowercase: true
         },
+        userType: {
+            type: String,
+            enum : ['user','admin'],
+            default: 'user'
+        },
         password: {
             type: String,
             text: true,
@@ -70,6 +75,34 @@ userSchema.statics = {
         console.log(foundUser);
         const match = await bcrypt.compare(password, foundUser.password);
         if(match){
+            return {
+                success: true,
+                message: 'Login successful',
+                token: jwt.sign({ _id: foundUser._id }, process.env.JWT_PRIVATE_KEY),
+                data: {
+                    user : foundUser,
+                }
+            };
+        }else{
+            return {
+                success: false,
+                message: 'username/password not found',
+                data: {}
+            };
+        }
+    },
+    async adminLogin(payload) {
+        let {email, password} = payload;
+        let foundUser = await this.findOne({'email': email}).exec();
+        const match = await bcrypt.compare(password, foundUser.password);
+        if(match){
+            if(foundUser.userType !== 'admin'){
+                return {
+                    success: false,
+                    message: 'This user is not an Administrator.',
+                    data: {}
+                };
+            }
             return {
                 success: true,
                 message: 'Login successful',
