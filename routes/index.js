@@ -24,7 +24,7 @@ router.get('/admin/create-post.html', function(req, res, next) {
   res.render('admin-create', { title: '' });
 });
 
-router.get('/admin/sign-in', function(req, res, next) {
+router.get('/admin/sign-in.html', function(req, res, next) {
   res.render('sign-in-admin', { title: '' });
 });
 
