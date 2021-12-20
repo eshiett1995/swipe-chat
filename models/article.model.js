@@ -60,6 +60,24 @@ articleSchema.statics = {
             };
         }
     },
+
+    async deleteArticle(body) {
+        try{
+            await this.deleteOne({_id: body.id}).exec();
+            return {
+                success: true,
+                message: 'Article successfully deleted',
+                data: {}
+            };
+        }catch (e) {
+            console.log(e)
+            return {
+                success: false,
+                message: 'Failed to delete article',
+                data: {}
+            };
+        }
+    },
     async getArticles() {
         const tags = await this.find({}).populate('author').exec();
         return {

@@ -26,4 +26,10 @@ router.post('/admin/create-article', async function(req, res, next) {
     res.send(response);
 });
 
+router.post('/admin/delete-article', async function(req, res, next) {
+    console.log(req.body);
+    let response = await ArticleModel.deleteArticle(req.body);
+    res.send(response);
+});
+
 module.exports = router;

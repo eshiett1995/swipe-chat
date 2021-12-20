@@ -166,6 +166,11 @@
   <script>
       function deleteArticle() {
           console.log(deleteArticle.caller.arguments[0].target.id);
+          $.post("/api/admin/delete-article", {id: deleteArticle.caller.arguments[0].target.id},  function(data, status){
+              if(data.success){
+                  window.location.href = '/admin/posts.html';
+              }
+          });
       }
       function addLoading() {
           const signInButton = $("#getHTML");
