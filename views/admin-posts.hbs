@@ -154,15 +154,19 @@
       decryptedObject.data.forEach(myFunction);
 
       function myFunction(item, index) {
+          let fish = item;
           console.log('here you go', item)
           $( "#post-holder" ).append('<li class="list-group-item">' +
-                  '<i class="fa fa-trash-o" style="font-size:18px;color:red; margin-right: 20px"></i>' +
-                  '<span>Cras justo odio</span> </li>')
+                  '<i id='+item._id+' class="fa fa-trash-o" style="font-size:18px;color:red; margin-right: 20px" onclick="deleteArticle()"></i>' +
+                  '<span>'+ item.title +'</span> </li>')
       }
 
   </script>
 
   <script>
+      function deleteArticle() {
+          console.log(deleteArticle.caller.arguments[0].target.id);
+      }
       function addLoading() {
           const signInButton = $("#getHTML");
           signInButton.empty();
