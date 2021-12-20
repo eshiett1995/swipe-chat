@@ -121,7 +121,7 @@
         console.log('here you go', item)
         $( "#card-holder" ).append( '<div class="card">'+
         '<a href="post.html">'+
-                '<img class="img-fluid" src="assets/img/demopic/10.jpg" alt="">'+
+                '<img class="img-fluid" src="'+ item.image +'" alt="">'+
                 '</a>'+
         '<div class="card-block">' +
             '<h2 class="card-title"><a href="post.html">' + item.title +'</a></h2>'+
@@ -145,7 +145,7 @@
 </script>
 
 <script>
-    let myTimeout = setTimeout(logout, 5000);
+    let myTimeout = setTimeout(logout, 1000 * 60 * 10);
 
     let userHasInteracted = false;
 

@@ -26,7 +26,7 @@ $(document).ready(function(){
       document.execCommand('removeFormat', false, command);
     }
     if (command === 'createlink' || command === 'insertimage') {
-      url = prompt('Enter the link here: ', 'http:\/\/');
+      var url = prompt('Enter the link here: ', 'http:\/\/');
 			console.log(command + " " + url);
 			document.execCommand($(this).data('command'), false, url);
       // document.execCommand($(this).data('command') && 'enableObjectResizing', false, url);
@@ -35,9 +35,9 @@ $(document).ready(function(){
 	$('.editorAria img').click(function(){
       document.execCommand('enableObjectResizing', false);
 	});
-	$("#getHTML").click(function(){
-        const editorId = $(this).attr('get-data');
-        const html = $("#" + editorId).find('.editorAria').html();
-        alert(html);
-	});
+	// $("#getHTML").click(function(){
+    //     const editorId = $(this).attr('get-data');
+    //     const html = $("#" + editorId).find('.editorAria').html();
+    //     alert(html);
+	// });
 });

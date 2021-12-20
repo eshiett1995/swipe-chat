@@ -312,7 +312,7 @@
 
     function myRestartFunction() {
         clearTimeout(myTimeout);
-        myTimeout = setTimeout(logout, 5000);
+        myTimeout = setTimeout(logout, 1000 * 60 * 10);
     }
     function logout() {
         const cookies = document.cookie.split(";");

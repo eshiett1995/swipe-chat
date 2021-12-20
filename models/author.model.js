@@ -55,6 +55,12 @@ authorSchema.statics = {
             data: {}
         };
     },
+
+    async getOne() {
+        let author = await this.findOne({});
+
+        return author;
+    },
 }
 
 authorSchema.plugin(userPaginate);

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const Schema = require("mongoose/lib/schema");
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const Author = require('./../models/author.model')
 
 const articleSchema = new Schema(
     {
@@ -36,17 +37,28 @@ const articleSchema = new Schema(
 );
 
 articleSchema.statics = {
-    async createDefault() {
-        let article = await this();
-        article.title = "Visiting the world means learning cultures";
-        article.detail = "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.";
-        article.organizer = mongoose.Types.ObjectId('61ab4957e80ed67b74c46fa8');
-        await article.save();
-        return {
-            success: true,
-            message: 'Article successfully saved',
-            data: {}
-        };
+    async create(body) {
+        try{
+            let article = await this();
+            article.title = body.title;
+            article.detail = body.detail;
+            article.image = body.image;
+            article.content = body.content;
+            let author = await Author.getOne();
+            article.author = author.toObject();
+            await article.save();
+            return {
+                success: true,
+                message: 'Article successfully saved',
+                data: {}
+            };
+        }catch (e) {
+            return {
+                success: false,
+                message: 'Failed to save article',
+                data: {}
+            };
+        }
     },
     async getArticles() {
         const tags = await this.find({}).populate('author').exec();
