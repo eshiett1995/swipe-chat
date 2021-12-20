@@ -42,13 +42,13 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li >
             <a href="/admin/create-post.html">
               <i class="nc-icon nc-bank"></i>
               <p>Create Item</p>
             </a>
           </li>
-          <li>
+          <li class="active ">
             <a href="/admin/posts.html">
               <i class="nc-icon nc-diamond"></i>
               <p>Delete</p>
@@ -107,74 +107,7 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-          <form action="#" onsubmit="postToServer();return false">
-              <div class="row">
-                  <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                          <label>Title</label>
-                          <input id="inputTitle" type="text" class="form-control" placeholder="Title" value="" required>
-                      </div>
-                  </div>
-                  <div class="col-md-6 pl-1">
-                      <div class="form-group">
-                          <label>Image Url</label>
-                          <input id="inputImage" type="text" class="form-control" placeholder="Image Url" value="" required>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                          <label>Detail</label>
-                          <input id="inputDetail" type="text" class="form-control" placeholder="Detail" value="" required>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-12 col-lg-8">
-                      <div class="editor" id="editor-1">
-                          <div class="toolbar">
-                              <a href="#" data-command='undo' data-toggle="tooltip" data-placement="top" title="Undo"><i class='fa fa-undo'></i></a>
-                              <a href="#" data-command='redo' data-toggle="tooltip" data-placement="top" title="Redo"><i class='fa fa-redo '></i></a>
-                              <a href="#" data-command='removeFormat' data-toggle="tooltip" data-placement="top" title="Clear format"><i class='fa fa-times '></i></a>
-                              <div class="fore-wrapper"><i class='fa fa-font' data-toggle="tooltip" data-placement="top" title="text color" style='color:#C96;'></i>
-                                  <div class="fore-palette">
-                                  </div>
-                              </div>
-                              <div class="back-wrapper"><i class='fa fa-font'  data-toggle="tooltip" data-placement="top" title="Background color" style='background:#C96;'></i>
-                                  <div class="back-palette">
-                                  </div>
-                              </div>
-                              <a href="#" data-command='bold' data-toggle="tooltip" data-placement="top" title="Bold"><i class='fa fa-bold'></i></a>
-                              <a href="#" data-command='italic' data-toggle="tooltip" data-placement="top" title="Italic"><i class='fa fa-italic'></i></a>
-                              <a href="#" data-command='underline' data-toggle="tooltip" data-placement="top" title="Underline"><i class='fa fa-underline'></i></a>
-                              <a href="#" data-command='strikeThrough' data-toggle="tooltip" data-placement="top" title="Strike through"><i class='fa fa-strikethrough'></i></a>
-                              <a href="#" data-command='justifyLeft' data-toggle="tooltip" data-placement="top" title="Left align"><i class='fa fa-align-left'></i></a>
-                              <a href="#" data-command='justifyCenter'><i class='fa fa-align-center' data-toggle="tooltip" data-placement="top" title="Center align"></i></a>
-                              <a href="#" data-command='justifyRight' data-toggle="tooltip" data-placement="top" title="Right align"><i class='fa fa-align-right'></i></a>
-                              <a href="#" data-command='justifyFull' data-toggle="tooltip" data-placement="top" title="Justify"><i class='fa fa-align-justify'></i></a>
-                              <a href="#" data-command='indent' data-toggle="tooltip" data-placement="top" title="Indent"><i class='fa fa-indent'></i></a>
-                              <a href="#" data-command='outdent'  data-toggle="tooltip" data-placement="top" title="Outdent"><i class='fa fa-outdent'></i></a>
-                              <a href="#" data-command='insertUnorderedList'  data-toggle="tooltip" data-placement="top" title="Unordered list"><i class='fa fa-list-ul'></i></a>
-                              <a href="#" data-command='insertOrderedList' data-toggle="tooltip" data-placement="top" title="Ordered list"><i class='fa fa-list-ol'></i></a>
-                              <a href="#" data-command='h1' data-toggle="tooltip" data-placement="top" title="H1">H1</a>
-                              <a href="#" data-command='h2'  data-toggle="tooltip" data-placement="top" title="H2">H2</a>
-                              <a href="#" data-command='createlink' data-toggle="tooltip" data-placement="top" title="Insert link"><i class='fa fa-link'></i></a>
-                              <a href="#" data-command='unlink' data-toggle="tooltip" data-placement="top" title="Unlink"><i class='fa fa-unlink'></i></a>
-                              <a href="#" data-command='insertimage' data-toggle="tooltip" data-placement="top" title="Insert image"><i class='fa fa-image'></i></a>
-                              <a href="#" data-command='p' data-toggle="tooltip" data-placement="top" title="Paragraph">P</a>
-                              <a href="#" data-command='subscript' data-toggle="tooltip" data-placement="top" title="Subscript"><i class='fa fa-subscript'></i></a>
-                              <a href="#" data-command='superscript'  data-toggle="tooltip" data-placement="top" title="Superscript"><i class='fa fa-superscript'></i></a>
-                          </div>
-                          <div id='editor' class="editorAria" contenteditable>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <button class="btn btn-info" id="getHTML" get-data="editor-1">
-                  Save Content
-              </button>
-          </form>
+          <ul class="list-group" id="post-holder"></ul>
       </div>
       <footer class="footer" style="position: absolute; bottom: 0; width: -webkit-fill-available;">
         <div class="container-fluid">
@@ -212,6 +145,22 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.js"></script>
   <script src="../text-editor/src/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
+  <script>
+      const decryptedBytes = CryptoJS.AES.decrypt('{{{data}}}', "{{key}}");
+      const plaintext = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      const decryptedObject = JSON.parse(plaintext);
+      decryptedObject.data.forEach(myFunction);
+
+      function myFunction(item, index) {
+          console.log('here you go', item)
+          $( "#post-holder" ).append('<li class="list-group-item">' +
+                  '<i class="fa fa-trash-o" style="font-size:18px;color:red; margin-right: 20px"></i>' +
+                  '<span>Cras justo odio</span> </li>')
+      }
+
+  </script>
 
   <script>
       function addLoading() {

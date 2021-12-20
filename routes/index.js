@@ -28,13 +28,13 @@ router.get('/admin/sign-in', function(req, res, next) {
   res.render('sign-in-admin', { title: '' });
 });
 
-router.get('/admin/posts.html', auth(), async function(req, res, next) {
+router.get('/admin/posts.html', async function(req, res, next) {
   const ArticleModel = require('./../models/article.model')
   let response = await ArticleModel.getArticles();
   let CryptoJS = require("crypto-js");
   let key = 'Secret Passphrase';
   let ciphertext = CryptoJS.AES.encrypt(JSON.stringify(response), key).toString();
-  res.render('posts', { title: '', data: ciphertext, key: key});
+  res.render('admin-posts', { title: '', data: ciphertext, key: key});
 });
 
 module.exports = router;
