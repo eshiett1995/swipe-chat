@@ -3,6 +3,8 @@ const router = express.Router();
 const UserModel = require('./../models/user.model')
 const ArticleModel = require('./../models/article.model')
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+const usersAndToken = [];
 
 /* GET users listing. */
 router.post('/sign-up', async function(req, res, next) {
@@ -15,6 +17,7 @@ router.post('/login', async function(req, res, next) {
     console.log(req.body);
     let response = await UserModel.login(req.body);
     if(response.success){
+        let generatedToken = Math.ceil(Math.random() * (99999 - 10000) + 10000).toString();
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -27,7 +30,7 @@ router.post('/login', async function(req, res, next) {
             from: 'vikky@gmail.com',
             to: req.body.email,
             subject: 'This is your code',
-            text: Math.ceil(Math.random() * (99999 - 10000) + 10000).toString()
+            text: generatedToken
         };
 
         transporter.sendMail(mailOptions, function(error, info){
@@ -37,8 +40,30 @@ router.post('/login', async function(req, res, next) {
                 console.log('Email sent: ' + info.response);
             }
         });
+
+        usersAndToken.push({email : req.body.email, token : generatedToken, userId : response.data.user._id})
     }
     res.send(response);
+});
+
+router.post('/token', async function(req, res, next) {
+    console.log(usersAndToken);
+    let emailAndToken = usersAndToken.find(element => element.email === req.body.email)
+    if(emailAndToken.token === req.body.token){
+        res.send( {
+            success: true,
+            message: 'Login successful',
+            token: jwt.sign({ _id: emailAndToken.userId }, process.env.JWT_PRIVATE_KEY),
+            data: {}
+        });
+    }else{
+        res.send({
+            success: false,
+            message: 'Login unsuccessful',
+            token: '',
+            data: {}
+        });
+    }
 });
 
 router.post('/admin/login', async function(req, res, next) {

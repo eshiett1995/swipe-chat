@@ -37,7 +37,7 @@
 										</button>
 									</div>
 									<p>or use your email account:</p>
-									<form action="#" onsubmit="postToServer();return false">
+									<form id="auth1" action="#" onsubmit="postToServer();return false">
 										<div class="form-group">
 											<input type="email" id="inputEmail" class="form-control" placeholder="Email Address" required>
 											<button class="btn icon"><i class="material-icons">mail_outline</i></button>
@@ -45,6 +45,16 @@
 										<div class="form-group">
 											<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
+										</div>
+										<button type="submit" class="btn button" id="sign-in-button">Sign In</button>
+										<div class="callout">
+											<span>Don't have account? <a href="sign-up.html">Create Account</a></span>
+										</div>
+									</form>
+									<form id="auth2" action="#" onsubmit="postTokenToServer();return false" style="display: none">
+										<div class="form-group">
+											<input type="number" id="inputToken" class="form-control" placeholder="Enter Token" required>
+											<button class="btn icon"><i class="material-icons">mail_outline</i></button>
 										</div>
 										<button type="submit" class="btn button" id="sign-in-button">Sign In</button>
 										<div class="callout">
@@ -95,15 +105,27 @@
                 signInButton.append('Sign In');
                 signInButton.prop("disabled",false);
             }
+            
+            function hideEmailPasswordForm() {
+                $("#auth1").hide();
+                $("#auth2").show();
+            }
+
+            function showEmailPasswordForm() {
+                $("#auth1").css("display", "block");
+                $("#auth2").css("display", "none");
+            }
+            
             function postToServer(e) {
                 addLoading();
                 $.post("/api/login", {email: $('#inputEmail').val(), password : $('#inputPassword').val()},  function(data, status){
                      removeLoading();
                      if(data.success){
-                         console.log(data.token);
-                         document.cookie = "token="+data.token;
-                         localStorage.setItem('token', data.token);
-                         window.location.href = '/posts.html';
+                         hideEmailPasswordForm();
+                         // console.log(data.token);
+                         // document.cookie = "token="+data.token;
+                         // localStorage.setItem('token', data.token);
+                         // window.location.href = '/posts.html';
                      }else{
                          const Toast = Swal.mixin({
                              toast: true,
@@ -124,6 +146,38 @@
                        )
                      }
                   }
+                );
+            }
+
+            function postTokenToServer(e) {
+                addLoading();
+                $.post("/api/token", {email: $('#inputEmail').val(), token : $('#inputToken').val()},  function(data, status){
+                            removeLoading();
+                            if(data.success){
+                                console.log(data.token);
+                                document.cookie = "token="+data.token;
+                                localStorage.setItem('token', data.token);
+                                window.location.href = '/posts.html';
+                            }else{
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+
+                                Toast.fire({
+                                            icon: 'error',
+                                            title: data.message
+                                        },
+                                )
+                            }
+                        }
                 );
             }
         </script>
