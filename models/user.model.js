@@ -73,6 +73,13 @@ userSchema.statics = {
         let {email, password} = payload;
         let foundUser = await this.findOne({'email': email}).exec();
         console.log(foundUser);
+        if(!foundUser){
+            return {
+                success: false,
+                message: 'username/password not found',
+                data: {}
+            };
+        }
         const match = await bcrypt.compare(password, foundUser.password);
         if(match){
             return {
