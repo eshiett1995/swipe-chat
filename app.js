@@ -25,7 +25,14 @@ db.once('open', function () {
   console.log('connected');
 });
 
+const mailchimpTx = require("@mailchimp/mailchimp_transactional")("FKaUIlvrZNV7ayJo3R8onQ");
 
+async function run() {
+  const response = await mailchimpTx.users.ping();
+  console.log(response);
+}
+
+run();
 
 const router = express.Router();
 const app = express();
